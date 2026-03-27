@@ -6,7 +6,8 @@ namespace LimpopoTourDestinations.Data
 {
     public class TourDbContext : DbContext
     {
-        public TourDbContext(DbContextOptions dbcontextoptions) : base(dbcontextoptions)
+        public TourDbContext(DbContextOptions<TourDbContext> options)
+    : base(options)
         {
         }
          public DbSet<Tour> Tours {  get; set; }

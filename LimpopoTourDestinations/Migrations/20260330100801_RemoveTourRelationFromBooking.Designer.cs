@@ -4,6 +4,7 @@ using LimpopoTourDestinations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LimpopoTourDestinations.Migrations
 {
     [DbContext(typeof(TourDbContext))]
-    partial class TourDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260330100801_RemoveTourRelationFromBooking")]
+    partial class RemoveTourRelationFromBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +51,34 @@ namespace LimpopoTourDestinations.Migrations
                     b.HasIndex("TourId");
 
                     b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("LimpopoTourDestinations.DTOs.TourDto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TourImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tour");
                 });
 
             modelBuilder.Entity("LimpopoTourDestinations.Models.Domain.Guide", b =>

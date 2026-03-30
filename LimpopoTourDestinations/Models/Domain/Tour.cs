@@ -3,14 +3,13 @@
     public class Tour
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
-        public int DurationDays { get; set; }
-        public string Location { get; set; }
+        public string Name { get; set; }  // Required
+        public string Description { get; set; }  // Required
+        public decimal Price { get; set; }  // Required
+        public int DurationDays { get; set; }  // Required
+        public string Location { get; set; }  // Required
         public string? TourImageurl { get; set; }
         public Guid? GuideId { get; set; }
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
-
+        public List<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

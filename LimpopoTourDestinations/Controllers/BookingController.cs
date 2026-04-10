@@ -23,19 +23,19 @@ namespace LimpopoTourDestinations.Controllers
             if (booking == null)
                 return BadRequest("Booking cannot be empty");
 
-            // Validate TourId
             if (booking.TourId == Guid.Empty)
                 return BadRequest("TourId is required");
 
+            // FIXED: use t.Id instead of t.GuideId
             var tourExists = await _context.Tours
-                .AnyAsync(t => t.GuideId  == booking.TourId);
-            
-            if (!tourExists)
-                return BadRequest("Invalid TourId");
+                .AnyAsync(t => t.Id == booking.TourId);
 
-            // Assign values
+            if (!tourExists)
+                return BadRequest("Invalid TourId - no tour found with that Id");
+
             booking.Id = Guid.NewGuid();
             booking.BookedAt = DateTime.UtcNow;
+            booking.Tour = null; // Prevent EF from trying to insert a new Tour
 
             await _context.Bookings.AddAsync(booking);
             await _context.SaveChangesAsync();

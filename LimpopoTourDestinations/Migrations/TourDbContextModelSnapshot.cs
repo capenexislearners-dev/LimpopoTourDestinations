@@ -40,7 +40,7 @@ namespace LimpopoTourDestinations.Migrations
                     b.Property<int>("NumberOfPeople")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("TourId")
+                    b.Property<Guid>("TourId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -98,6 +98,7 @@ namespace LimpopoTourDestinations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TourImageurl")
@@ -112,9 +113,13 @@ namespace LimpopoTourDestinations.Migrations
 
             modelBuilder.Entity("Booking", b =>
                 {
-                    b.HasOne("LimpopoTourDestinations.Models.Domain.Tour", null)
+                    b.HasOne("LimpopoTourDestinations.Models.Domain.Tour", "Tour")
                         .WithMany("Bookings")
-                        .HasForeignKey("TourId");
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tour");
                 });
 
             modelBuilder.Entity("LimpopoTourDestinations.Models.Domain.Tour", b =>

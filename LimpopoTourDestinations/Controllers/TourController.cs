@@ -47,7 +47,6 @@ namespace LimpopoTourDestinations.Controllers
             if (tour == null)
                 return BadRequest("Tour cannot be empty");
 
-            // Validate required fields
             if (string.IsNullOrWhiteSpace(tour.Name))
                 return BadRequest("Tour name is required");
             if (string.IsNullOrWhiteSpace(tour.Description))
@@ -59,22 +58,17 @@ namespace LimpopoTourDestinations.Controllers
             if (tour.DurationDays <= 0)
                 return BadRequest("DurationDays must be greater than zero");
 
-            // Only check guide exists if GuideId is provided
+            // Validate GuideId if provided
             if (tour.GuideId.HasValue)
             {
                 var guideExists = await _context.Guides.AnyAsync(g => g.Id == tour.GuideId.Value);
                 if (!guideExists)
-                {
-                    // Instead of rejecting, set GuideId to null if invalid
                     tour.GuideId = null;
-                }
             }
 
-            // Assign new Id if not provided
-            if (tour.Id == Guid.Empty)
-                tour.Id = Guid.NewGuid();
+            // Always assign a fresh Id
+            tour.Id = Guid.NewGuid();
 
-            // Initialize bookings list if null
             if (tour.Bookings == null)
                 tour.Bookings = new List<Booking>();
 
@@ -91,7 +85,6 @@ namespace LimpopoTourDestinations.Controllers
             if (updatedTour == null)
                 return BadRequest("Invalid tour data");
 
-            // Find the existing tour by URL id
             var existingTour = await _context.Tours
                 .Include(t => t.Bookings)
                 .FirstOrDefaultAsync(t => t.Id == id);
@@ -99,7 +92,6 @@ namespace LimpopoTourDestinations.Controllers
             if (existingTour == null)
                 return NotFound("Tour not found");
 
-            // Update main tour fields
             existingTour.Name = updatedTour.Name;
             existingTour.Description = updatedTour.Description;
             existingTour.Price = updatedTour.Price;
@@ -108,22 +100,17 @@ namespace LimpopoTourDestinations.Controllers
             existingTour.TourImageurl = updatedTour.TourImageurl;
             existingTour.GuideId = updatedTour.GuideId;
 
-            // Handle bookings safely
             if (updatedTour.Bookings != null)
             {
                 foreach (var booking in updatedTour.Bookings)
                 {
-                    // Generate new ID for any booking with Guid.Empty
                     if (booking.Id == Guid.Empty)
                         booking.Id = Guid.NewGuid();
                 }
-
-                // Replace existing bookings with the updated ones
                 existingTour.Bookings = updatedTour.Bookings;
             }
 
             await _context.SaveChangesAsync();
-
             return Ok(existingTour);
         }
 
@@ -143,7 +130,6 @@ namespace LimpopoTourDestinations.Controllers
 
             _context.Tours.Remove(tour);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
     }

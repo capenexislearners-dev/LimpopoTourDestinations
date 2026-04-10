@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LimpopoTourDestinations.Migrations
 {
     [DbContext(typeof(TourDbContext))]
-    [Migration("20260327061309_Initial create")]
-    partial class Initialcreate
+    [Migration("20260410070926_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace LimpopoTourDestinations.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("LimpopoTourDestinations.Models.Domain.Booking", b =>
+            modelBuilder.Entity("Booking", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,6 +101,7 @@ namespace LimpopoTourDestinations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TourImageurl")
@@ -113,7 +114,7 @@ namespace LimpopoTourDestinations.Migrations
                     b.ToTable("Tours");
                 });
 
-            modelBuilder.Entity("LimpopoTourDestinations.Models.Domain.Booking", b =>
+            modelBuilder.Entity("Booking", b =>
                 {
                     b.HasOne("LimpopoTourDestinations.Models.Domain.Tour", "Tour")
                         .WithMany("Bookings")
@@ -127,13 +128,13 @@ namespace LimpopoTourDestinations.Migrations
             modelBuilder.Entity("LimpopoTourDestinations.Models.Domain.Tour", b =>
                 {
                     b.HasOne("LimpopoTourDestinations.Models.Domain.Guide", null)
-                        .WithMany("Tour")
+                        .WithMany("Tours")
                         .HasForeignKey("GuideId");
                 });
 
             modelBuilder.Entity("LimpopoTourDestinations.Models.Domain.Guide", b =>
                 {
-                    b.Navigation("Tour");
+                    b.Navigation("Tours");
                 });
 
             modelBuilder.Entity("LimpopoTourDestinations.Models.Domain.Tour", b =>

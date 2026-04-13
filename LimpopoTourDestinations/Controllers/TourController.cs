@@ -1,4 +1,4 @@
-﻿using LimpopoTourDestinations.Data;
+using LimpopoTourDestinations.Data;
 using LimpopoTourDestinations.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

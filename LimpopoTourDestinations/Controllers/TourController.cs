@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using LimpopoTourDestinations.Data;
 using LimpopoTourDestinations.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LimpopoTourDestinations.Controllers
 {
@@ -20,7 +20,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // GET: api/Tour
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             var tours = await _context.Tours
@@ -31,8 +31,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // GET: api/Tour/{id}
         [HttpGet("{id}")]
-        [Authorize]
-
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var tour = await _context.Tours
@@ -47,7 +46,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // POST: api/Tour
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] Tour tour)
         {
             if (tour == null)
@@ -64,7 +63,6 @@ namespace LimpopoTourDestinations.Controllers
             if (tour.DurationDays <= 0)
                 return BadRequest("DurationDays must be greater than zero");
 
-            // Validate GuideId if provided
             if (tour.GuideId.HasValue)
             {
                 var guideExists = await _context.Guides.AnyAsync(g => g.Id == tour.GuideId.Value);
@@ -72,7 +70,6 @@ namespace LimpopoTourDestinations.Controllers
                     tour.GuideId = null;
             }
 
-            // Always assign a fresh Id
             tour.Id = Guid.NewGuid();
 
             if (tour.Bookings == null)
@@ -86,7 +83,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // PUT: api/Tour/{id}
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Tour updatedTour)
         {
             if (updatedTour == null)
@@ -123,7 +120,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // DELETE: api/Tour/{id}
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var tour = await _context.Tours

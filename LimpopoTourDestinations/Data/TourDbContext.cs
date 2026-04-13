@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using LimpopoTourDestinations.Models.Domain;
 
 namespace LimpopoTourDestinations.Data
 {
-    public class TourDbContext : DbContext
+    public class TourDbContext : IdentityDbContext<AppUser>
     {
         public TourDbContext(DbContextOptions<TourDbContext> options)
             : base(options)

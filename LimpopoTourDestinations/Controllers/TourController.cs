@@ -2,11 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using LimpopoTourDestinations.Data;
 using LimpopoTourDestinations.Models.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LimpopoTourDestinations.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TourController : ControllerBase
     {
         private readonly TourDbContext _context;
@@ -18,6 +20,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // GET: api/Tour
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var tours = await _context.Tours
@@ -28,6 +31,8 @@ namespace LimpopoTourDestinations.Controllers
 
         // GET: api/Tour/{id}
         [HttpGet("{id}")]
+        [Authorize]
+
         public async Task<IActionResult> GetById(Guid id)
         {
             var tour = await _context.Tours
@@ -42,6 +47,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // POST: api/Tour
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] Tour tour)
         {
             if (tour == null)
@@ -80,6 +86,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // PUT: api/Tour/{id}
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Update(Guid id, [FromBody] Tour updatedTour)
         {
             if (updatedTour == null)
@@ -116,6 +123,7 @@ namespace LimpopoTourDestinations.Controllers
 
         // DELETE: api/Tour/{id}
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             var tour = await _context.Tours

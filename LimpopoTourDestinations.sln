@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36930.0 d17.14
+VisualStudioVersion = 17.14.36930.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LimpopoTourDestinations", "LimpopoTourDestinations\LimpopoTourDestinations.csproj", "{570CF04C-6E8D-4BED-B18B-2F150033D5F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LimpopoToursFrontend", "..\LimpopoToursFrontend\LimpopoToursFrontend\LimpopoToursFrontend.csproj", "{312B9908-A143-2A15-118D-9327022D34E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{570CF04C-6E8D-4BED-B18B-2F150033D5F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{570CF04C-6E8D-4BED-B18B-2F150033D5F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{570CF04C-6E8D-4BED-B18B-2F150033D5F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{312B9908-A143-2A15-118D-9327022D34E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{312B9908-A143-2A15-118D-9327022D34E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{312B9908-A143-2A15-118D-9327022D34E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{312B9908-A143-2A15-118D-9327022D34E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,6 +8,7 @@ namespace LimpopoTourDestinations.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TourController : ControllerBase
     {
         private readonly TourDbContext _context;
@@ -62,7 +63,6 @@ namespace LimpopoTourDestinations.Controllers
             if (tour.DurationDays <= 0)
                 return BadRequest("DurationDays must be greater than zero");
 
-            // Validate GuideId if provided
             if (tour.GuideId.HasValue)
             {
                 var guideExists = await _context.Guides.AnyAsync(g => g.Id == tour.GuideId.Value);
@@ -70,7 +70,6 @@ namespace LimpopoTourDestinations.Controllers
                     tour.GuideId = null;
             }
 
-            // Always assign a fresh Id
             tour.Id = Guid.NewGuid();
 
             if (tour.Bookings == null)
